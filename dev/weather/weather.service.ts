@@ -25,6 +25,11 @@ export class WeatherService
         .catch(error => {
             console.error(error);
             return Observable.throw(error.json())
+            
         });
+    }
+
+    clearWeatherItems(){
+        WEATHER_ITEMS.splice(0);
     }
 }

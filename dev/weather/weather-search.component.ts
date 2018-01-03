@@ -11,15 +11,18 @@ import { OnInit } from 'angular2/src/core/linker/interfaces';
         <section class="weather-search" >
             <form (ngSubmit)="onSubmit(f)" #f="ngForm">
                 <label for="city">City</label>
-                <input ngControl="location" type="text" id="city" (input)="onSearchLocation(input.value)" required #input>
+                <input ngControl="location" type="text" id="city"  required>
                 <button type="Submit">Add City</button>
             </form>
-            <div>
-                <span class="info">City found:</span> {{data.name}}
-            </div>
+
         </section>
     `
 })
+
+// <input ngControl="location" type="text" id="city" (input)="onSearchLocation(input.value)" required #input>
+// <div>
+// <span class="info">City found:</span> {{data.name}}
+// </div>
 
 export class WeatherSearchComponent implements OnInit{
 
@@ -29,7 +32,6 @@ export class WeatherSearchComponent implements OnInit{
     constructor(private _weatherService: WeatherService) {}
 
     onSubmit(form: ControlGroup){
-        //console.log(form);
         this._weatherService.searchWeatherData(form.value.location)
         .subscribe(
             data => {
@@ -39,21 +41,8 @@ export class WeatherSearchComponent implements OnInit{
         );
     }
 
-    onSearchLocation(cityName: string){
-        this.searchStream
-        .next(cityName);
-    }
+
     
-    ngOnInit(){
-        // this.searchStream
-        // .subscribe(data => console.log(data))
-        this.searchStream
-            // .debounceTime(300)
-            // .distinctUntilChanged()
-            .switchMap((input:string) => this._weatherService.searchWeatherData(input))
-            .subscribe(
-                data => console.log(data)
-            );
-        }
+    ngOnInit(){}
 
 }
